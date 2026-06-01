@@ -1,0 +1,347 @@
+/* ----------------------------------------------------------
+   Personal site — academic minimalist, inspired by
+   people.cs.umass.edu/~shenoy
+   ---------------------------------------------------------- */
+
+:root {
+  --bg:            #ffffff;
+  --text:          #1a1a1a;
+  --text-strong:   #111;
+  --text-muted:    #333;
+  --text-faint:    #555;
+  --text-vfaint:   #777;
+  --border:        #ddd;
+  --border-light:  #e7e7e7;
+  --border-img:    #ccc;
+  --link:          #0645ad;
+  --link-visited:  #0b0080;
+  --nav-bg:        #2d3138;
+  --nav-text:      #d8d8d8;
+  --nav-text-on:   #ffffff;
+  --nav-brand-hov: #e8c0d0;
+  --nav-accent:    #882345;
+  --nav-hover-bg:  rgba(255,255,255,0.06);
+}
+
+[data-theme="dark"] {
+  --bg:            #16181d;
+  --text:          #e6e6e6;
+  --text-strong:   #f4f4f4;
+  --text-muted:    #c2c2c2;
+  --text-faint:    #9a9a9a;
+  --text-vfaint:   #7a7a7a;
+  --border:        #2c2f36;
+  --border-light:  #23252b;
+  --border-img:    #3a3d44;
+  --link:          #6ea8fe;
+  --link-visited:  #b39ddb;
+  --nav-bg:        #0e1014;
+  --nav-text:      #c4c4c4;
+  --nav-text-on:   #ffffff;
+  --nav-brand-hov: #e8c0d0;
+  --nav-accent:    #b03050;
+  --nav-hover-bg:  rgba(255,255,255,0.06);
+}
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: "Lora", Georgia, "Times New Roman", Times, serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Skip link: visually hidden until keyboard-focused, then floats top-left. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.5rem 0.85rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  z-index: 1000;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0.75rem;
+  top: 0.75rem;
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+/* --------------- Top navigation --------------- */
+nav.topnav {
+  background: var(--nav-bg);
+  color: var(--nav-text-on);
+  border-bottom: 4px solid var(--nav-accent);
+}
+
+.nav-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 1.0rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.2rem;
+}
+
+.nav-inner .brand {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--nav-text-on);
+  text-decoration: none;
+  padding: 0.85rem 0;
+  margin-right: 0.4rem;
+  flex-shrink: 0;
+}
+.nav-inner .brand:hover { color: var(--nav-brand-hov); }
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid #888;
+  color: var(--nav-text-on);
+  font-size: 1.1rem;
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.nav-links, .nav-social {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.nav-social { margin-left: auto; }
+
+.nav-links li a, .nav-social li a, .nav-social li button {
+  display: flex;
+  align-items: center;
+  padding: 0.85rem 0.7rem;
+  color: var(--nav-text);
+  text-decoration: none;
+  font-size: 0.92rem;
+  letter-spacing: 0.3px;
+  background: transparent;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+.nav-links li a:hover,
+.nav-social li a:hover,
+.nav-social li button:hover {
+  color: var(--nav-text-on);
+  background: var(--nav-hover-bg);
+}
+.nav-links li a.active {
+  color: var(--nav-text-on);
+  border-bottom: 2px solid var(--nav-text-on);
+  margin-bottom: -2px;
+}
+
+/* Icon links in the right-hand nav. */
+.nav-social li a, .nav-social li button {
+  padding: 0.85rem 0.55rem;
+}
+
+/* Inline SVG icons (LinkedIn, Scholar, GitHub, theme toggle moon/sun). */
+.nav-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  vertical-align: middle;
+}
+
+/* Theme toggle: show only the icon that matches the current theme. */
+#theme-toggle svg { display: none; }
+#theme-toggle .theme-icon-light { display: inline-block; }
+[data-theme="dark"] #theme-toggle .theme-icon-light { display: none; }
+[data-theme="dark"] #theme-toggle .theme-icon-dark  { display: inline-block; }
+
+/* CV icon: inline SVG — page with folded corner, "CV" text, and two lines.
+   Alignment is now handled by the inline-flex+align-items:center on the
+   parent .nav-social li a; no vertical-align needed. */
+.cv-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* --------------- Wrap / content --------------- */
+.wrap {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 2.0rem 1.25rem 3.0rem;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  margin: 0.4rem 0 1.2rem;
+}
+
+/* --------------- Masthead --------------- */
+.masthead {
+  display: flex;
+  gap: 1.8rem;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.masthead .photo { flex: 0 0 170px; }
+.masthead .photo img {
+  width: 170px;
+  height: auto;
+  display: block;
+}
+
+.masthead .title { flex: 1; }
+.masthead h1 {
+  font-size: 2.25rem;
+  line-height: 1.15;
+  margin: 0 0 0.6rem;
+}
+.tiny-link {
+  font-size: 0.4em;
+  font-weight: normal;
+  letter-spacing: 0;
+  vertical-align: baseline;
+  margin-left: 0.3em;
+  color: var(--text-faint);
+}
+/* Bio link inherits the standard link color via the generic "a" rule. */
+
+.masthead .affil {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* Affiliation and contact lines stacked in a single column under the role. */
+.masthead .contact-row {
+  margin-top: 0.9rem;
+}
+
+/* --------------- Sections --------------- */
+section { margin: 1.6rem 0; }
+
+/* Headings use sans-serif (Helvetica Neue), like Prashant Shenoy's
+   Bootstrap-defaulted site. Body text stays serif (Lora).
+   Weight 500 (medium) for a lighter look. */
+h1, h2, h3, h4, h5, h6, .page-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 0 0 0.7rem;
+  color: var(--text-strong);
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin: 1.1rem 0 0.4rem;
+  color: var(--text-strong);
+}
+
+p { margin: 0 0 0.75rem; }
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:visited { color: var(--link-visited); }
+
+/* --------------- News --------------- */
+ul.news {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+ul.news li {
+  position: relative;
+  padding: 0.35rem 0 0.35rem 5.2rem; /* left padding for date column */
+  border-bottom: 1px solid var(--border-light);
+}
+ul.news li:last-child { border-bottom: none; }
+ul.news .date {
+  position: absolute;
+  left: 0;
+  top: 0.5rem; /* roughly aligns date baseline with content baseline */
+  width: 4.5rem;
+  text-align: justify;
+  text-align-last: justify;
+  white-space: nowrap;
+  color: var(--text-faint);
+  font-size: 0.88rem;
+  letter-spacing: 0.4px;
+}
+.news-toggle {
+  margin-top: 0.5rem;
+  font-size: 0.93rem;
+}
+
+/* --------------- Publications --------------- */
+ul.pubs {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.5rem 0;
+}
+ul.pubs li { margin-bottom: 1.3rem; }
+.pauthors { display: block; }
+.pauthors b { font-weight: 550; } /* Nathan's name — between medium and semibold */
+.pvenue   { display: block; font-style: italic; color: var(--text-muted); }
+.plinks   { display: block; font-size: 0.92rem; margin-top: 0.1rem; }
+.plinks a { font-style: normal; }
+/* Award / honor note on a paper (e.g. Best Paper Candidate). Accent
+   color + medium weight so it stands out without reading as a link. */
+.paward   { display: block; font-size: 0.92rem; font-weight: 600; color: var(--nav-accent); }
+
+/* --------------- Footer --------------- */
+footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-vfaint);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* --------------- Responsive --------------- */
+@media (max-width: 720px) {
+  .nav-inner { flex-wrap: wrap; }
+  .nav-toggle { display: inline-block; margin-left: auto; }
+  .nav-links, .nav-social {
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    display: none;
+  }
+  .nav-links.open, .nav-social.open { display: flex; }
+  .nav-links li a, .nav-social li a {
+    padding: 0.6rem 0.2rem;
+    width: 100%;
+  }
+  .nav-social { margin-left: 0; border-top: 1px solid #444; }
+
+  .masthead {
+    flex-direction: column-reverse;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .masthead .photo img { width: 140px; }
+}
