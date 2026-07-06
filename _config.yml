@@ -1,0 +1,18 @@
+title: Nathan Kwan-Ho Ng
+description: Personal website for Nathan Kwan-Ho Ng
+
+# Used by Open Graph / Twitter Card meta to build absolute URLs.
+url: "https://khngnathan.github.io"
+baseurl: "/personal-website"
+
+# Auto-generate sitemap.xml (bundled with the github-pages gem).
+plugins:
+  - jekyll-sitemap
+
+# Files to skip when building the site.
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle
